@@ -1,0 +1,76 @@
+{
+  "tourId": 1414,
+  "price": "958",
+  "tourDetailsTop": {
+      "title": "Mallorca - Soller, zauberhaftes St\u00e4dtchen mit Bergpanorama",
+      "rating": "4.4",
+      "isFavorite": false,
+      "locations": [
+          {
+              "name": "Carrer de Bisbe Nadal, 10, 07100 S\u00f3ller, Illes Balears, Spanien"
+          }
+      ],
+      "tags": [
+          {
+              "tag": "au\u00dfergew\u00f6hnlicher Standort und Design"
+          },
+          {
+              "tag": "Pool"
+          },
+          {
+              "tag": "Parkplatz inbegriffen"
+          }
+      ]
+  },
+  "tourDetailsAuthorInfo": {
+      "name": "Sarah",
+      "logo": {
+          "img": "https:\/\/www.travely24.com\/api\/wp-content\/uploads\/2022\/09\/Sara-2.png",
+          "alt": " "
+      },
+      "subscribers": {
+          "youtube": "",
+          "facebook": "",
+          "instagram": ""
+      }
+  },
+  "tourDetailsImages": [
+      {
+          "type": "mp4",
+          "vid": "https:\/\/www.travely24.com\/api\/wp-content\/uploads\/2022\/09\/720_compress_Videoleap-211DC0B1-4B94-4350-A28A-8420C65AB24D.mp4",
+          "img": false,
+          "youtube": "",
+          "vimeo": "",
+          "alt": ""
+      },
+      {
+          "type": "image",
+          "vid": "",
+          "img": "https:\/\/www.travely24.com\/api\/wp-content\/uploads\/2022\/09\/Cal-Bisbe-1.jpg",
+          "youtube": "",
+          "vimeo": "",
+          "alt": ""
+      },
+      {
+          "type": "image",
+          "vid": "",
+          "img": "https:\/\/www.travely24.com\/api\/wp-content\/uploads\/2022\/09\/Cal-Bisbe-3.jpg",
+          "youtube": "",
+          "vimeo": "",
+          "alt": ""
+      },
+      {
+          "type": "image",
+          "vid": "",
+          "img": "https:\/\/www.travely24.com\/api\/wp-content\/uploads\/2022\/09\/Cal-Bisbe-4.jpg",
+          "youtube": "",
+          "vimeo": "",
+          "alt": ""
+      }
+  ],
+  "tourDetailsDescription": {
+      "hotelId": "29248",
+      "traveldays": "5",
+      "country": "ES"
+  }
+}
