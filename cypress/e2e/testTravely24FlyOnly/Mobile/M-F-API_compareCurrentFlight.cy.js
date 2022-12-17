@@ -3,8 +3,8 @@
 describe('COMPARE TITLE AER, TIME, PRICE',()=>{
 
 
-
-
+//
+ git
  it('compare title aer, ',() => {
     cy.viewport(525, 425);
     cy.visit('https://www.travely24.com/de/tours/1618?period=6&adults=2&children&ff=0,1439|0,1439&hid=24613&fa=ZNZ&sDate=2023-01-18&eDate=2023-01-24&productType=flight&roomType=7AD++U&boardType=OV&PT=pauschal&flight=TC105%3C-QR1499|QR69%3C-QR70-%3EQR1491|',

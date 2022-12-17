@@ -46,7 +46,8 @@ describe('FLYONLU MOBILE', () => {
 			cy.viewport(525, 425);
 			cy.visit(customURL({}), { timeout: 50000 });
 			cy.wait(4000);
-
+cy.get('[data-cy="buttonFlightChoose"]').click({force:true}) 
+cy.wait(4000)
 			cy.get('[data-cy="firstAirNameFrom"]', { timeout: 50000 }).then(textFrom => {
 				console.log('textFrom', textFrom);
 				const airFrom = textFrom.get(0).innerText;
@@ -113,7 +114,8 @@ describe('FLYONLU MOBILE', () => {
     
 		it('Test number of CHILDREN from URL and CHILDREN in the site', () => {
 			cy.viewport(525, 425);
-			// cy.visit(customURLHotelOnly({}));
+			cy.visit(customURL({}), { timeout: 50000 });
+			cy.wait(4000)
 			cy.get('[data-cy="childrensCount"]', {
 				timeout: 100000
 			}).then(text => {
@@ -129,6 +131,8 @@ describe('FLYONLU MOBILE', () => {
 		it('Test number of PEOPLE from URL and PEOPLE in the site', () => {
 			// cy.visit(customURLHotelOnly({}), {timeout:10000});
 			cy.viewport(525, 425);
+			cy.visit(customURL({}), { timeout: 50000 });
+			cy.wait(4000)
 			cy.get('[data-cy="totalPeriodAndPeople"]', {
 				timeout: 100000
 			}).then(text => {
@@ -140,13 +144,15 @@ describe('FLYONLU MOBILE', () => {
 				const children = CHILDREN_DEFAULT.split(',').length;
 				const adult = Number(ADULTS_DEFAULT);
 				const people = children + adult;
+				cy.wait(3000)
 				expect(peopleCountInSite).to.equal(people);
 			});
 		});
 
 		it('delete child in site', () => {
 			cy.viewport(525, 425);
-			// cy.visit(customURLHotelOnly({}),{timeout:10000});
+			cy.visit(customURL({}), { timeout: 50000 });
+			cy.wait(4000)
 			cy.get('[data-cy="buttonCalendarChoose"]', {
 				timeout: 100000
 			}).click();
@@ -156,15 +162,18 @@ describe('FLYONLU MOBILE', () => {
 					force: true
 				});
 			});
+			cy.wait(3000)
 			cy.get('[data-cy="block-plus-minus_count_child"]', { timeout: 10000 }).then(count => {
 				const countChild = count.get(0).innerText;
 				console.log('countChild', countChild);
+				cy.wait(3000)
 				expect(countChild).to.include(0);
 			});
 		});
 		it('delete adult in site', () => {
-			cy.viewport(525, 425);
-			// cy.visit(customURLHotelOnly({}),{timeout:10000});
+			cy.viewport(525, 525);
+			cy.visit(customURL({}), { timeout: 50000 });
+			cy.wait(4000)
 			cy.get('[data-cy="buttonCalendarChoose"]', {
 				timeout: 100000
 			}).click({ force: true });
@@ -187,8 +196,9 @@ describe('FLYONLU MOBILE', () => {
 
 		it('test text date in calendar', () => {
 			cy.viewport(525, 425);
-			// cy.visit(customURLHotelOnly({}), {timeout:10000});
-			cy.wait(10000);
+			cy.visit(customURL({}), { timeout: 50000 });
+			cy.wait(4000)
+		
 			cy.get('[data-cy="calendarDateFromTo"] > .block-subtitle-content-item', {
 				timeout: 10000
 			}).then(text => {
@@ -287,7 +297,7 @@ cy.wait(2000)
 	});
 
   
-      it.only('Visit without TO ', () => {
+      it('Visit without TO ', () => {
         cy.viewport(425, 525);
         cy.visit(customURL({ fdUrlFrom: FD_URL_FROM }));
 		cy.wait(8000)

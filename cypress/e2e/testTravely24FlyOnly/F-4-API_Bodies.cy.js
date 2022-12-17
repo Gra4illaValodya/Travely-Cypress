@@ -45,7 +45,7 @@ describe('Test #3-2-2 _ API test bodies and other --- 10.10.2022', () => {
       
         cy.intercept({
           method: 'GET',
-          url:  'https://connector.traffics.de/v3/rest/offers/?productType=flight&navigation=1%2C1000%2C1&searchDate=37%2C39&fromDate=37&toDate=39&duration=2&adults=2&optionList=roomType,inclusiveCode&tourOperatorList=1AV,5VF,ALD,ALDX,ALL,AME,ANEX,ATID,ATIS,ATK,ATOU,AWT,BAV,BCH,BDV,BENX,BIG,BU,BUM,BXCH,BYE,CBM,CDA,CDHB,CFI,CHR,COR,CPK,DANS,DER,DES,DTA,ECC,ELVI,ERV,ETD,ETI,FALK,FER,FIT,FLT,FLYD,FOR,FTI,FTV,FUV,GULE,HCON,HEX,HMR,HTH,HUC,ICC,IHOM,ITS,ITSB,ITSX,ITT,JAHN,JANA,KAE,LMX,LMXI,MON,MPR,MWR,NOSO,OGE,OGO,OLI,PALH,PALM,PHX,RIVA,RMS,RSD,SCAR,SEHO,SIT,SLR,SLRD,SNOW,SPRI,STT,TJAX,TRAL,TREX,TUIS,TVR,UPS,VFLY,VTO,VTOI,WOL,XALL,XANE,XBIG,XECC,XJAH,XMWR,XOLI,XPOD,XPUR,TUID,XFTI,X5VF,XDER&children=3,11&departureAirportList=CGN&arrivalAirportList=VRN&dontDecorate=true'
+          url:  'https://connector.traffics.de/v3/rest/offers/?productType=flight**'
          }).as(`getProductType`);
         sizeFetchTypeAER.forEach((_item, i) => {
           cy.intercept({
@@ -154,38 +154,53 @@ describe('Test #3-2-2 _ API test bodies and other --- 10.10.2022', () => {
       it(`Catch and test get APIes - random adults=${String(
         sizeRandomAdults
       )} and children=${String(arrayRandomChildren)}`, () => {
-        cy.server();
-        cy.route(
-          'GET',
-          customApiProductType({
-            fdUrlFrom: FD_URL_FROM,
-            fdUrlTo: FA_URL_TO,
-            adults: String(sizeRandomAdults),
-            children: String(arrayRandomChildren),
-          })
-        ).as(`getProductType`);
-        sizeFetchTypeAER.forEach((_item, i) => {
-          cy.route(
-            'GET',
-            customApiAER({
-              numberCatch: i + 1,
-              fdUrlFrom: FD_URL_FROM,
-              fdUrlTo: FA_URL_TO,
-              adults: String(sizeRandomAdults),
-              children: String(arrayRandomChildren),
-            })
-          ).as(`getAER_${i + 1}`);
-        });
-        
+        cy.intercept({
+          method:'GET',
+          url:  `https://connector.traffics.de/v3/rest/offers/?productType=flight**`
+         } ).as(`getProductType`);
 
-        cy.wait(`@getProductType`, { timeout: 10000 })
-          .its('status')
-          .should('eq', 200);
-        sizeFetchTypeAER.forEach((_item, i) => {
-          cy.wait(`@getAER_${i + 1}`, { timeout: 10000 })
-            .its('status')
-            .should('eq', 200);
-        });
+        cy.intercept({
+          method: 'GET',
+          url: `https://www.travely24.com/api/?r=aer*&stype=1`
+        }).as('AER_1');
+    
+        cy.intercept({
+          method: 'GET',
+          url: `https://www.travely24.com/api/?r=aer*&stype=2`
+        }).as('AER_2');
+    
+        cy.intercept({
+          method: 'GET',
+          url: `https://www.travely24.com/api/?r=aer*&stype=3`
+        }).as('AER_3');
+    
+        cy.intercept({
+          method: 'GET',
+          url: `https://www.travely24.com/api/?r=aer*&stype=4`
+        }).as('AER_4');
+    
+        cy.intercept({
+          method: 'GET',
+          url: `https://www.travely24.com/api/?r=aer*&stype=5`
+        }).as('AER_5');
+    
+
+
+         cy.wait(`@getProductType`, { timeout: 50000 }).then( el => {
+          expect(el.response.statusCode).to.eq(200)
+      
+        })
+
+         cy.wait(['@AER_1', '@AER_2', '@AER_3', '@AER_4', '@AER_5'], { timeout: 60000 }).spread(
+          (AER_1, AER_2, AER_3, AER_4, AER_5) => {
+
+            expect(AER_1.response.statusCode).to.eq(200)
+            expect(AER_2.response.statusCode).to.eq(200)
+            expect(AER_3.response.statusCode).to.eq(200)
+            expect(AER_4.response.statusCode).to.eq(200)
+            expect(AER_5.response.statusCode).to.eq(200)
+          });
+       
       });
 
       it(`Test size bodies on site - random adults=${String(
@@ -221,7 +236,8 @@ describe('Test #3-2-2 _ API test bodies and other --- 10.10.2022', () => {
           const numberSizeAdultsSite = parseInt(innerText);
           const numberSizeAdults = Number(sizeRandomAdults);
           console.log('numberSizeAdults',numberSizeAdults);
-          expect(numberSizeAdultsSite).to.have.tring(numberSizeAdults);
+          cy.wait(2000)
+          expect(numberSizeAdultsSite).to.be.equal(numberSizeAdults);
         });
       });
 
@@ -233,8 +249,9 @@ describe('Test #3-2-2 _ API test bodies and other --- 10.10.2022', () => {
         }).then((textSizeChildren) => {
           const innerText = textSizeChildren.get(0).innerText;
           const numberSizeChildrenSite = parseInt(innerText);
+          console.log('numberSizeChildrenSite',numberSizeChildrenSite);
           const numberSizeChildren = String(arrayRandomChildren).split(',').length;
-          expect(numberSizeChildrenSite).to.have.string(numberSizeChildren);
+          expect(numberSizeChildrenSite).to.be.eq(numberSizeChildren);
         });
       });
 

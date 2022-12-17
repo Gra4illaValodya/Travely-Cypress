@@ -26,7 +26,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.viewport(1600, 1600);
 
       cy.get('[disabled="false"] > .item-tour-form', {
-        timeout: 10000,
+        timeout: 20000,
       }).click({
         force: true,
       });
@@ -35,33 +35,33 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
     it(`Click - filters air`, () => {
       cy.viewport(1600, 1600);
       cy.get('.other-options', {
-        timeout: 10000,
+        timeout: 20000,
       }).click({
         force: true,
       });
     });
 
-    it('  ', () => {
+    it('  dew', () => {
 
       cy.viewport(1600, 1600);
-      // cy.visit(customURL({}));
+      cy.visit(customURL({}));
+      cy.wait(2000)
       cy.intercept({
         method:'GET',
-        url: 'https://connector.traffics.de/v3/rest/offers/?productType=flight&navigation=1%2C1000%2C1&searchDate=36%2C38&fromDate=36&toDate=38&duration=2&adults=2&optionList=roomType,inclusiveCode&tourOperatorList=1AV,5VF,ALD,ALDX,ALL,AME,ANEX,ATID,ATIS,ATK,ATOU,AWT,BAV,BCH,BDV,BENX,BIG,BU,BUM,BXCH,BYE,CBM,CDA,CDHB,CFI,CHR,COR,CPK,DANS,DER,DES,DTA,ECC,ELVI,ERV,ETD,ETI,FALK,FER,FIT,FLT,FLYD,FOR,FTI,FTV,FUV,GULE,HCON,HEX,HMR,HTH,HUC,ICC,IHOM,ITS,ITSB,ITSX,ITT,JAHN,JANA,KAE,LMX,LMXI,MON,MPR,MWR,NOSO,OGE,OGO,OLI,PALH,PALM,PHX,RIVA,RMS,RSD,SCAR,SEHO,SIT,SLR,SLRD,SNOW,SPRI,STT,TJAX,TRAL,TREX,TUIS,TVR,UPS,VFLY,VTO,VTOI,WOL,XALL,XANE,XBIG,XECC,XJAH,XMWR,XOLI,XPOD,XPUR,TUID,XFTI,X5VF,XDER&children=3,11&flight%5Bdirectness%5D=N&departureAirportList=ZAG&arrivalAirportList=JFK&dontDecorate=true'
+        url: 'https://connector.traffics.de/v3/rest/offers/?productType=flight**'
       }).as(
         `getProductTypeDirektflug`
       );
 
-      cy.get('#flights-check0', {
-        timeout: 10000,
-      }).click({
-        force: true,
-      });
-      cy.get('#flights-check0').should('be.checked');
-      cy.wait(`@getProductTypeDirektflug`, { timeout: 20000 })
-        // cy.wrap('@getProductTypeDirektflug')
-        // .its('status')
-        // .should('eq', 200);
+      // cy.get('#flights-check0', {
+      //   timeout: 20000,
+      // }).click({
+      //   force: true,
+      // });
+      // cy.get('#flights-check0').should('be.checked');
+      cy.wait(`@getProductTypeDirektflug`, { timeout: 20000 }).then( el => {
+        expect(el.response.statusCode).to.eq(200)
+      })
     });
 
     it('Check - Business, test check and test APIes', () => {
@@ -76,12 +76,12 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       ).as(`getProductTypeBusiness`);
 
       cy.get('#flights-check1', {
-        timeout: 10000,
+        timeout: 20000,
       }).click({
         force: true,
       });
       cy.get('#flights-check1').should('be.checked');
-      cy.wait(`@getProductTypeBusiness`, { timeout: 10000 })
+      cy.wait(`@getProductTypeBusiness`, { timeout: 20000 })
         .its('status')
         .should('eq', 200);
       cy.wait(5000);
@@ -92,7 +92,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         '[data-v-3eec4b0d=""][data-v-d967ea44=""] > .option > .max > .max-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -100,14 +100,14 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         '[data-v-3eec4b0d=""][data-v-d967ea44=""] > .option > .max > .max-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).type('3000');
 
       cy.get(
         '[data-v-3eec4b0d=""][data-v-d967ea44=""] > .option > .min > .min-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -116,13 +116,13 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         '[data-v-3eec4b0d=""][data-v-d967ea44=""] > .option > .min > .min-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).type('2000');
       cy.get(
         '[data-v-3eec4b0d=""][data-v-d967ea44=""] > .option > .max > .max-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -134,7 +134,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(5) > .block-user-dropdown > .option > .max > .max-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -142,7 +142,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(5) > .block-user-dropdown > .option > .max > .max-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       )
         .type('22:40')
@@ -155,7 +155,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(5) > .block-user-dropdown > .option > .min > .min-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -163,14 +163,14 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(5) > .block-user-dropdown > .option > .min > .min-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).type('01:10');
       cy.wait(2000);
       cy.get(
         ':nth-child(5) > .block-user-dropdown > .option > .min > .min-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).type('Cypress.io{esc}');
     });
@@ -180,7 +180,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(7) > .block-user-dropdown > .option > .min > .min-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -188,7 +188,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(7) > .block-user-dropdown > .option > .min > .min-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       )
         .type('01:10')
@@ -231,7 +231,7 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(7) > .block-user-dropdown > .option > .max > .max-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
@@ -239,31 +239,31 @@ describe('Test #3-3-1-Filters air test --- 08.10.2022', () => {
       cy.get(
         ':nth-child(7) > .block-user-dropdown > .option > .max > .max-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).type('22:40');
       cy.wait(2000);
       cy.get(
         ':nth-child(7) > .block-user-dropdown > .option > .max > .max-input',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).type('Cypress.io{esc}');
 
       cy.get(
         ':nth-child(7) > .block-user-dropdown > .option > .min > .min-value',
         {
-          timeout: 10000,
+          timeout: 20000,
         }
       ).click({
         force: true,
       });
       sizeFetchTypeAER.forEach((_item, i) => {
-        cy.wait(`@getAER_Price_${i + 1}`, { timeout: 10000 })
+        cy.wait(`@getAER_Price_${i + 1}`, { timeout: 20000 })
           .its('status')
           .should('eq', 200);
       });
-      cy.wait(`@getProductTypePrice`, { timeout: 10000 })
+      cy.wait(`@getProductTypePrice`, { timeout: 20000 })
         .its('status')
         .should('eq', 200);
     });

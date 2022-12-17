@@ -263,7 +263,8 @@ export const compareFlightPrices = (o1, o2, type) => {
 		return [...retArr, ...o2.filter(o => o !== null)];
 	}
 };
-ribe('FUNC', () => {
+
+describe('FUNC', () => {
 
     it('2',()=> {
         cy.visit(
@@ -363,18 +364,19 @@ cy.wait(2000)
     // FlyArr.forEach(el => {
     //     console.log('el',el);
     cy.get('.show-more-btn').click({force:true , multiple:true})
-    cy.get('.d-flex.flex-column  .ticket-top-price',{timeout:30000}).then(arr => {
+    cy.get('.d-flex.flex-column .ticket-top-price',{timeout:30000}).each(arr => {
         console.log(arr);
         const a = arr.text().replaceAll(' ', '').split('€')
         console.log(a)
 
   
-    const stop = 12
+    const b = a.slice(length - 1 ,-1)
+	console.log('b',b);
      
        
        
   final.forEach( (el ,indexEl)=> {
-    a.forEach( (e ,indexE) => {
+    b.forEach( (e ,indexE) => {
             
       
   
