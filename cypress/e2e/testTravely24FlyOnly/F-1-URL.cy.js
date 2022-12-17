@@ -25,13 +25,13 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
   });
 
   it('Visit site travely24', () => {
-    cy.viewport(1600, 1200);
+    cy.viewport(1600, 1600);
     cy.visit(customURL({}));
   });
 
   context('Test checked', () => {
     it('Test checked fly', () => {
-      cy.viewport(1600, 1200);
+      cy.viewport(1600, 1600);
       cy.get('[disabled="false"] > .item-tour-form > :nth-child(1) > input', {
         timeout: 10000,
       })
@@ -39,7 +39,7 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
         .then(() => console.log(`Expected checkbox "Fly" to be checked`));
     });
     it('Test not checked hotel', () => {
-      cy.viewport(1600, 1200);
+      cy.viewport(1600, 1600);
       cy.get(
         '[style="opacity: 0.5;"] > .item-tour-form > :nth-child(1) > input',
         {
@@ -55,7 +55,7 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
     
     it('Test main title', () => {
       
-      cy.viewport(1600, 1200);
+      cy.viewport(1600, 1600);
       
       cy.get(':nth-child(1) > .fromTo > .from', {
         timeout: 100000,
@@ -81,7 +81,7 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
     });
     it('Test title airport', () => {
       
-      cy.viewport(1600, 1200);
+      cy.viewport(1600, 1600);
       
       expect(titleAll.mainTitle).to.have.string(titleAll.from);
       expect(titleAll.mainTitle).to.have.string(titleAll.to);
@@ -91,14 +91,14 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
   context('Test text this url', () => {
     it('Test text in calendar', () => {
       cy.visit(customURL({}));
-      cy.viewport(1600, 1200);
+      cy.viewport(1600, 1600);
       cy.get('.item-tour-form-column > .block-fly-text', {
         timeout: 100000,
       }).then((text) => {
         const innerText = text.get(0).innerText.split(/\n/);
         const [dateFrom, dateTo] = innerText;
-        const siteDateFrom = verifyDateFunction(dateFrom.replace('k', 'c'));
-        const siteDateTo = verifyDateFunction(dateTo.replace('k', 'c'));
+        const siteDateFrom = verifyDateFunction(dateFrom) //.replace('k', 'c'));
+        const siteDateTo = verifyDateFunction(dateTo) // .replace('k', 'c'));
         expect(siteDateFrom).to.have.string(
           verifyDateFunction(FROM_DATE_DEFAULT)
         );
@@ -109,7 +109,7 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
 
   context('Test calendar', () => {
     it('Get active days in calendar', () => {
-      cy.viewport(1600, 1200);
+      cy.viewport(1600, 1600);
       cy.get('.swiper-slide', {
         timeout: 100000,
       }).then((text) => {
@@ -132,163 +132,137 @@ describe('Test #3-1-1- _ Testing URL --- 08.10.2022', () => {
   });
 
   context('Test adults and children', () => {
-    const sizeChildrenUrl = CHILDREN_DEFAULT.split(',').length;
-    const sizeAdultsUrl = Number(ADULTS_DEFAULT);
-    let sizeBodiesSite = null;
-    let sizeAdultsSite = null;
-    let sizeChildrenSite = null;
-
-    console.log('sizeChildrenUrl',sizeChildrenUrl);
-    console.log('sizeAdultsUrl',sizeAdultsUrl);
-    it.only('Get quantity all adults and children', () => {
-      cy.visit(customURL({}));
-      cy.viewport(1600, 1200);
-      cy.get('[data-cy="amountTravelers"]', {
-        timeout: 100000,
-      })
-
-        .then((buttonAllBodies) => {
-          sizeBodiesSite = parseInt(buttonAllBodies.get(0).innerText);
-          expect(sizeBodiesSite).to.equal(sizeAdultsUrl + sizeChildrenUrl);
-       
-        })
-
-        .click({
-           multiple: true ,
-          force: true,
-        });
-
-      cy.get(':nth-child(1) > .block-plus-minus > .block-plus-minus__count', {
-        timeout: 100000,
-      }).then((textSizeAdults) => {
-        sizeAdultsSite = parseInt(textSizeAdults.get(0).innerText);
-      });
-      cy.get(':nth-child(2) > .block-plus-minus > .block-plus-minus__count', {
-        timeout: 100000,
-      }).then((textSizeChildren) => {
-        sizeChildrenSite = parseInt(textSizeChildren.get(0).innerText);
-      });
-    });
-    it.only('Test quantity adults and children', () => {
-      cy.viewport(1600, 1200);
-      const quantityPeopleUrl = sizeAdultsUrl + sizeChildrenUrl;
-
-      expect(sizeChildrenSite).to.equal(sizeChildrenUrl);
-      expect(sizeAdultsSite).to.equal(sizeAdultsUrl);
-      expect(sizeChildrenSite + sizeAdultsSite).to.equal(
-        sizeChildrenUrl + sizeAdultsUrl
-      );
-      expect(sizeBodiesSite).to.equal(quantityPeopleUrl);
-    });
-  });
-
-  context('Test manual delete children in site', () => {
     const sizeAdultsUrl = Number(ADULTS_DEFAULT);
     const newArray = Array.from(Array(sizeAdultsUrl).keys());
-    let sizeAdultsSite = null;
-    let sizeChildrenSite = null;
-
-    it.only('Click button "delete children" in site', () => {
-      cy.viewport(1600, 1200);
-      cy.reload();
+    let sizeAdultsSite = 0;
+  
+    let sizeChildrenSite = 0;
+  
+    it('Click button "delete children" in site', () => {
+      cy.viewport(1600, 1600);
+      cy.visit(customURL({}),{timeout:30000})
+      // cy.reload();
+      cy.wait(8000)
       cy.get('[data-cy="amountTravelers"]', {
-        timeout: 100000,
+        timeout: 10000,
       }).click({
         force: true,
+       
       });
       CHILDREN_DEFAULT.split(',').forEach((_item) => {
-        cy.get(':nth-child(2) > .block-plus-minus > .block-plus-minus__minus', {
-          timeout: 100000,
+        cy.get('[data-cy="block-plus-minus_minus_child"]', {
+          timeout: 10000,
         }).click({
           force: true,
+          
         });
       });
     });
-    it.only('Test the children are not included', () => {
-      cy.viewport(1600, 1200);
-      cy.get(':nth-child(2) > .block-plus-minus > .block-plus-minus__count', {
-        timeout: 100000,
+    
+    
+    it('Click button "delete adults" in site', () => {
+      cy.viewport(1600, 1600);
+      newArray.forEach((_item) => {
+        cy.get('[data-cy="block-plus-minus_minus_adult"]', {
+          timeout: 10000,
+        }).click({
+          force: true,
+          multiple:true
+        });
+      });
+    });
+    it('Test the children are not included', () => {
+      cy.viewport(1600, 1600);
+      cy.wait(2000)
+      cy.get('[data-cy="block-plus-minus_count_child"]', {
+        timeout: 10000,
       }).then((textSizeChildren) => {
         sizeChildrenSite = parseInt(textSizeChildren.get(0).innerText);
+        console.log('sizeChildrenSite',sizeChildrenSite);
         expect(sizeChildrenSite).to.equal(0);
-      });
+      }); 
     });
-
-    it.only('Click button "delete adults" in site', () => {
-      cy.viewport(1600, 1200);
-      newArray.forEach((_item) => {
-        cy.get(':nth-child(1) > .block-plus-minus > .block-plus-minus__minus', {
-          timeout: 100000,
-        }).click({
-          force: true,
-        });
-      });
-    });
-    it.only('Test adults are not included', () => {
-      cy.viewport(1600, 1200);
-      cy.get(':nth-child(1) > .block-plus-minus > .block-plus-minus__count', {
-        timeout: 100000,
+    
+    it('Test adults are not included', () => {
+      cy.viewport(1600, 1600);
+      cy.wait(8000)
+      cy.get('[data-cy="block-plus-minus_count_adult"]', {
+        timeout: 10000,
       }).then((textSizeAdults) => {
+        console.log('textSizeAdults',textSizeAdults);
         sizeAdultsSite = parseInt(textSizeAdults.get(0).innerText);
+        console.log('textSizeAdults.get(0).innerText',textSizeAdults.get(0).innerText);
+        console.log('sizeAdultsSite',sizeAdultsSite);
+        // console.log('sizeChildrenSite',sizeChildrenSite);
         expect(sizeAdultsSite).to.equal(0);
       });
     });
-    it.only('Reload site and test two adults are added ', () => {
-      cy.viewport(1600, 1200);
+    
+    it('Reload site and test two adults are added ', () => {
+      cy.viewport(1600, 1600);
       cy.reload();
       cy.get('[data-cy="amountTravelers"]', {
-        timeout: 100000,
+        timeout: 10000,
       }).click({
         force: true,
+        
       });
-      cy.get(':nth-child(1) > .block-plus-minus > .block-plus-minus__count', {
-        timeout: 100000,
+      cy.get('[data-cy="block-plus-minus_count_adult"]', {
+        timeout: 10000,
       }).then((textSizeAdults) => {
-        sizeAdultsSite = parseInt(textSizeAdults.get(0).innerText);
-        expect(sizeAdultsSite).to.equal(1);
+        sizeAdultsSite = textSizeAdults.get(0).innerText;
+        console.log('sizeChildrenSite',sizeChildrenSite);
+        expect(sizeAdultsSite).to.include(1);
       });
     });
-    it.only('Delete children, reload site and test empty children', () => {
+    it('Delete children, reload site and test empty children', () => {
       cy.viewport(1600, 1600);
       cy.get('#select-margin', {
-        timeout: 100000,
+        timeout: 10000,
       }).select(0);
       cy.wait(5000);
-      cy.get(':nth-child(2) > .block-plus-minus > .block-plus-minus__minus', {
-        timeout: 100000,
+      cy.get('[data-cy="block-plus-minus_minus_child"]', {
+        timeout: 10000,
       })
         .click({
           force: true,
+          
         })
         .then(() => {
           cy.wait(5000);
           cy.reload();
           cy.get('[data-cy="amountTravelers"]', {
-            timeout: 100000,
+            timeout: 10000,
           }).click({
             force: true,
           });
           cy.get(
-            ':nth-child(1) > .block-plus-minus > .block-plus-minus__count',
+            '[data-cy="block-plus-minus_count_adult"]',
             {
-              timeout: 100000,
+              timeout: 10000,
             }
           ).then((textSizeAdults) => {
-            sizeAdultsSite = parseInt(textSizeAdults.get(0).innerText);
-            expect(sizeAdultsSite).to.equal(1);
+            console.log('textSizeAdults',textSizeAdults);
+            sizeAdultsSite = textSizeAdults.get(0).innerText;
+            //  console.log('sizeChildrenSite',sizeChildrenSite);
+            console.log('sizeAdultsSite',sizeAdultsSite);
+            console.log('textSizeAdults.get(0).innerText',textSizeAdults.get(0).innerText);
+            expect(sizeAdultsSite).to.include("1");
           });
-
+  
           cy.get(
-            ':nth-child(2) > .block-plus-minus > .block-plus-minus__count',
+            '[data-cy="block-plus-minus_count_child"]',
             {
-              timeout: 100000,
+              timeout: 10000,
             }
           ).then((textSizeAdults) => {
-            sizeAdultsSite = parseInt(textSizeAdults.get(0).innerText);
+            sizeAdultsSite = Number(parseInt(textSizeAdults.get(0).innerText));
+            console.log('sizeAdultsSite',sizeAdultsSite);
             expect(sizeAdultsSite).to.equal(0)
-           
+          
           });
         });
     });
-  });
+    
+  })
 });

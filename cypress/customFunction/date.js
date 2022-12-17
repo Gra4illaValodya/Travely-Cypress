@@ -34,6 +34,6 @@ export const verifyDateFunction = (oldDate) => {
   return new Date(oldDate).toLocaleDateString('de-DE', {
     year: 'numeric',
     day: 'numeric',
-    month: 'numeric',
+    month: 'short',
   });
 };

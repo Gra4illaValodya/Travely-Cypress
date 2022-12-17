@@ -1,23 +1,14 @@
 
+describe('TEST',() =>{
 
-describe('dsd',()=> {
-    it('wedw',()=>{
+    it('visit',()=>{
         cy.visit(
-            "https://www.travely24.com/de/tours/1317?period=4&adults=2&children=3,11&hid=12378&fa=ORD&sDate=2022-11-14&eDate=2022-11-18&productType=hotelonly&roomType=Z7+U&boardType=OV&PT=hotelonly",
-            { timeout: 30000 }
-          );
-          // cy.get('.totalPriceBlock' , {timeout:14000})
-      
-          cy.intercept({
-            method: 'GET',
-            url:
-              '**/offers/?*&productType=hotelonly',
-          }).as('traficsHotelOnly');
-
-          cy.wait('@traficsHotelOnly', { timeout: 40000 }).then((hotels) => {
-            const b = hotels.response.body.offerList;
-    console.log('b',b);
-
-          })
-    })
+               "https://www.travely24.com/de/tours/1382?period=3&adults=2&children&hid=18101&fa=JFK&sDate=2023-01-09&eDate=2023-01-12&productType=hotelonly&roomType=DZ+U&boardType=OV&PT=pauschal&flight=AA6932%3C-BA2738|AA6760-%3EAA6938|",
+               { timeout: 30000 }
+             );
+       cy.url().then( el => {
+        console.log(el);
+       })
+     
+   })
 })

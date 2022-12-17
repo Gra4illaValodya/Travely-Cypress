@@ -26,7 +26,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
 
   it('Visit site travely24', () => {
     cy.viewport(1600, 1200);
-    cy.visit(customURL({}));
+    cy.visit('https://www.travely24.com/de/tours/777?hid=62836&period=2&adults=2&children=3,11&fa=JFK&sDate=2023-01-12&eDate=2023-01-14&productType=flight&roomType=DF1F&boardType=UF&PT=pauschal&fd=ZAG');
   });
 
   it('Get date this APIes', () => {
@@ -38,8 +38,9 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         `getAER_${i + 1}`
       );
     });
+
     newArray.forEach((_item, i) => {
-      cy.wait(`@getAER_${i + 1}`, { timeout: 100000 })
+      cy.wait(`@getAER_${i + 1}`, { timeout: 10000 })
         .its('status')
         .should('eq', 200);
       cy.get(`@getAER_${i + 1}`).then(({ response }) => {
@@ -49,7 +50,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         availableFareList.forEach((item) => arrayAERFareList.push(item));
       });
     });
-    cy.wait(`@getProductType`, { timeout: 100000 })
+    cy.wait(`@getProductType`, { timeout: 10000 })
       .its('status')
       .should('eq', 200);
     cy.get(`@getProductType`).then(({ response }) => {
@@ -57,6 +58,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
       getProductType = body;
     });
   });
+  
   it('Test create new date this APIes', () => {
     cy.viewport(1600, 1200);
     const priceAll = arrayAERFareList.map((item) => {
@@ -127,12 +129,12 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
     it('Enter show 10 items', () => {
       cy.viewport(1600, 1200);
       cy.get('.block-contents-wrapper > .btn-blue', {
-        timeout: 100000,
+        timeout: 10000,
       }).click({
         force: true,
       });
       cy.get('.show-more-btn', {
-        timeout: 100000,
+        timeout: 10000,
       }).click({
         force: true,
       });
@@ -144,7 +146,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         cy.get(
           `#showedOtherFlights${i} > [style="border: 0px; margin: 0px; width: 100%; --c81fc0a4:9999;"] > :nth-child(1) > :nth-child(1) > .drop-tour-form-fly-ticket > :nth-child(2) > .ticket-center-time > :nth-child(1)`,
           {
-            timeout: 100000,
+            timeout: 10000,
           }
         ).then((html) => {
           const timeSite = html.get(0).innerText;
@@ -163,7 +165,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         cy.get(
           `#showedOtherFlights${i} > [style="border: 0px; margin: 0px; width: 100%; --c81fc0a4:9999;"] > :nth-child(1) > :nth-child(1) > .drop-tour-form-fly-ticket > :nth-child(2) > .ticket-center-time > :nth-child(3)`,
           {
-            timeout: 100000,
+            timeout: 10000,
           }
         ).then((html) => {
           const timeSite = html.get(0).innerText;
@@ -183,7 +185,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         cy.get(
           `#showedOtherFlights${i} > [style="border: 0px; margin: 0px; width: 100%; --c81fc0a4:9999;"] > :nth-child(1) > :nth-child(1) > .drop-tour-form-fly-ticket > :nth-child(3) > .ticket-center-time > :nth-child(1)`,
           {
-            timeout: 100000,
+            timeout: 10000,
           }
         ).then((html) => {
           const timeSite = html.get(0).innerText;
@@ -202,7 +204,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         cy.get(
           `#showedOtherFlights${i} > [style="border: 0px; margin: 0px; width: 100%; --c81fc0a4:9999;"] > :nth-child(1) > :nth-child(1) > .drop-tour-form-fly-ticket > :nth-child(3) > .ticket-center-time > :nth-child(3)`,
           {
-            timeout: 100000,
+            timeout: 10000,
           }
         ).then((html) => {
           const timeSite = html.get(0).innerText;
@@ -221,7 +223,7 @@ describe('Test #3-3-2-Test items on site _ URL --- 08.10.2022', () => {
         cy.get(
           `#showedOtherFlights${i} > [style="border: 0px; margin: 0px; width: 100%; --c81fc0a4:9999;"] > :nth-child(1) > :nth-child(1) > .drop-tour-form-fly-ticket > .btn-alternativeFlights-wrapper > .flight-price`,
           {
-            timeout: 100000,
+            timeout: 10000,
           }
         ).then((html) => {
           const priceSite = Number(parseFloat(html.get(0).innerText));
